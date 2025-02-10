@@ -1,0 +1,41 @@
+:root {
+  /* colors */
+  --clr-blue-300: hsl(238, 40%, 52%);
+  --clr-red-300: hsl(358, 79%, 66%);
+  --clr-blue-100: hsl(239, 57%, 85%);
+  --clr-red-100: hsl(357, 100%, 86%);
+
+  --clr-black-300: hsl(212, 24%, 26%);
+  --clr-black-100: hsl(211, 10%, 45%);
+  --clr-white-400: hsl(223, 19%, 93%);
+  --clr-white-300: hsl(228, 33%, 97%);
+  --clr-white-100: hsl(0, 0%, 100%);
+
+  /* typography */
+  --fnt-primary: Rubik, "sans-serif";
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+button,
+textarea,
+input {
+  font-family: var(--fnt-primary);
+}
+
+body {
+  background-color: var(--clr-white-300);
+}
+
+#root {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
