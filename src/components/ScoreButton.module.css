@@ -1,0 +1,46 @@
+.scoreButton {
+  display: inline-flex;
+  width: 6.25rem;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--clr-white-300);
+  border-radius: 10px;
+  gap: 0.35rem;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  border: none;
+  background-color: transparent;
+  width: 100%;
+  cursor: pointer;
+}
+
+.button:hover svg path {
+  fill: var(--clr-blue-300);
+}
+
+.score {
+  font-weight: 500;
+  color: var(--clr-blue-300);
+}
+
+.liked {
+  fill: var(--clr-blue-300);
+}
+
+.disliked {
+  fill: var(--clr-blue-300);
+}
+
+@media (min-width: 375px) {
+  .scoreButton {
+    flex-direction: column;
+    width: 2.5rem;
+    height: 6.25rem;
+  }
+}

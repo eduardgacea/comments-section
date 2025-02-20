@@ -1,4 +1,4 @@
-import { TDeletePostPayload, TEditPostPayload, TRatePostPayload } from "../types/postContext";
+import { TDeletePostPayload, TEditPostPayload } from "../types/postContext";
 import { PostContext } from "../context/PostContextProvider";
 import { EPostType, TComment } from "../types/post";
 import { currentUser } from "../data/data.json";
@@ -6,6 +6,7 @@ import { TReplyFormProps } from "./ReplyForm";
 import { useState, useContext } from "react";
 
 import styles from "./Comment.module.css";
+import ScoreButton from "./ScoreButton";
 
 type TCommentProps = {
   comment: TComment;
@@ -15,28 +16,10 @@ type TCommentProps = {
 };
 
 export default function Comment({ comment, setDeletePostPayload, setReplyPayload, setShowModal }: TCommentProps) {
-  const { editedPostId, ratePost, startReplyingTo, startEditingPost, editPost } = useContext(PostContext);
+  const { editedPostId, startReplyingTo, startEditingPost, editPost } = useContext(PostContext);
   const [editBoxContent, setEditBoxContent] = useState(comment.content);
 
   const isEditing = editedPostId === comment.id;
-
-  const handleLikeComment = (id: number) => {
-    const payload: TRatePostPayload = {
-      id,
-      postType: EPostType.COMMENT,
-      rating: 1,
-    };
-    ratePost(payload);
-  };
-
-  const handleDislikeComment = (id: number) => {
-    const payload: TRatePostPayload = {
-      id,
-      postType: EPostType.COMMENT,
-      rating: -1,
-    };
-    ratePost(payload);
-  };
 
   const handleDeleteComment = (id: number) => {
     setShowModal(true);
@@ -90,11 +73,7 @@ export default function Comment({ comment, setDeletePostPayload, setReplyPayload
         <div className={styles.content}>{comment.content}</div>
       )}
       <div>
-        <div>
-          <button onClick={() => handleLikeComment(comment.id)}>+</button>
-          <span>{comment.score}</span>
-          <button onClick={() => handleDislikeComment(comment.id)}>-</button>
-        </div>
+        <ScoreButton id={comment.id} score={comment.score} />
         <div>{comment.user.username === currentUser.username && UserControls}</div>
       </div>
     </div>

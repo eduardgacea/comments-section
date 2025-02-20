@@ -1,4 +1,4 @@
-import { TDeletePostPayload, TEditPostPayload, TRatePostPayload } from "../types/postContext";
+import { TDeletePostPayload, TEditPostPayload } from "../types/postContext";
 import { PostContext } from "../context/PostContextProvider";
 import { TComment, TReply, EPostType } from "../types/post";
 import { currentUser } from "../data/data.json";
@@ -6,6 +6,7 @@ import { TReplyFormProps } from "./ReplyForm";
 import { useContext, useState } from "react";
 
 import styles from "./Reply.module.css";
+import ScoreButton from "./ScoreButton";
 
 type TReplyProps = {
   reply: TReply;
@@ -16,30 +17,10 @@ type TReplyProps = {
 };
 
 export default function Reply({ reply, comment, setDeletePostPayload, setReplyPayload, setShowModal }: TReplyProps) {
-  const { editedPostId, ratePost, startReplyingTo, startEditingPost, editPost } = useContext(PostContext);
+  const { editedPostId, startReplyingTo, startEditingPost, editPost } = useContext(PostContext);
   const [editBoxContent, setEditBoxContent] = useState(reply.content);
 
   const isEditing = editedPostId === reply.id;
-
-  const handleLikeReply = (id: number, parentPostId: number) => {
-    const payload: TRatePostPayload = {
-      id,
-      parentPostId,
-      postType: EPostType.REPLY,
-      rating: 1,
-    };
-    ratePost(payload);
-  };
-
-  const handleDislikeReply = (id: number, parentPostId: number) => {
-    const payload: TRatePostPayload = {
-      id,
-      parentPostId,
-      postType: EPostType.REPLY,
-      rating: -1,
-    };
-    ratePost(payload);
-  };
 
   const handleDeleteReply = (id: number, parentPostId: number) => {
     setShowModal(true);
@@ -94,11 +75,7 @@ export default function Reply({ reply, comment, setDeletePostPayload, setReplyPa
         <div className={styles.content}>{`@${reply.replyingTo} ${reply.content}`}</div>
       )}
       <div>
-        <div>
-          <button onClick={() => handleLikeReply(reply.id, comment.id)}>+</button>
-          <span>{reply.score}</span>
-          <button onClick={() => handleDislikeReply(reply.id, comment.id)}>-</button>
-        </div>
+        <ScoreButton id={reply.id} parentPostId={comment.id} score={reply.score} />
         <div>{reply.user.username === currentUser.username && UserControls}</div>
       </div>
     </div>
