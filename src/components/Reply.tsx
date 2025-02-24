@@ -13,7 +13,7 @@ type TReplyProps = {
   reply: TReply;
   comment: TComment;
   setDeletePostPayload: React.Dispatch<React.SetStateAction<TDeletePostPayload | undefined>>;
-  setReplyPayload: React.Dispatch<React.SetStateAction<TReplyFormProps>>;
+  setReplyPayload: React.Dispatch<React.SetStateAction<TReplyFormProps | undefined>>;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 

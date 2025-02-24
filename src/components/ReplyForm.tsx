@@ -1,22 +1,20 @@
 import { PostContext } from "../context/PostContextProvider";
-import { useContext, useState } from "react";
 import { TReplyPayload } from "../types/postContext";
+import { useContext, useState } from "react";
 
 export type TReplyFormProps = {
-  id: number | undefined;
-  parentPostId: number | undefined;
+  id: number;
+  parentPostId: number;
   replyingTo: string;
 };
 
 export default function ReplyForm({ id, parentPostId, replyingTo }: TReplyFormProps) {
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState(`@${replyingTo} `);
   const { endReplyingTo, addReply } = useContext(PostContext);
-
-  if (!id || !parentPostId) return null;
 
   const handleAddReply = () => {
     const replyPayload: TReplyPayload = {
-      content,
+      content: content.replace(`@${replyingTo} `, ""),
       replyingTo,
       parentPostId,
     };
@@ -24,13 +22,20 @@ export default function ReplyForm({ id, parentPostId, replyingTo }: TReplyFormPr
     endReplyingTo();
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newValue = e.target.value;
+    if (!newValue.startsWith(`@${replyingTo} `)) {
+      setContent(`@${replyingTo} `);
+    } else {
+      setContent(newValue);
+    }
+  };
+
+  if (!id || !parentPostId) return null;
+
   return (
     <div>
-      <textarea
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        placeholder="your reply here..."
-      ></textarea>
+      <textarea value={content} onChange={handleChange} placeholder="your reply here..."></textarea>
       <button onClick={handleAddReply}>Reply</button>
     </div>
   );

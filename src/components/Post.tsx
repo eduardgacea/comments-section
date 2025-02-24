@@ -16,11 +16,7 @@ type TPostProps = { comment: TComment };
 
 export default function Post({ comment }: TPostProps) {
   const [deletePostPayload, setDeletePostPayload] = useState<TDeletePostPayload | undefined>();
-  const [replyPayload, setReplyPayload] = useState<TReplyFormProps>({
-    id: undefined,
-    parentPostId: undefined,
-    replyingTo: "",
-  });
+  const [replyPayload, setReplyPayload] = useState<TReplyFormProps | undefined>(undefined);
   const [showModal, setShowModal] = useState(false);
 
   const { isReplyingTo } = useContext(PostContext);
@@ -34,7 +30,7 @@ export default function Post({ comment }: TPostProps) {
         setReplyPayload={setReplyPayload}
         setShowModal={setShowModal}
       />
-      {isReplyingTo === comment.id && (
+      {isReplyingTo === comment.id && replyPayload && (
         <ReplyForm id={replyPayload.id} parentPostId={replyPayload.parentPostId} replyingTo={replyPayload.replyingTo} />
       )}
       <div>
@@ -48,7 +44,7 @@ export default function Post({ comment }: TPostProps) {
                 setReplyPayload={setReplyPayload}
                 setShowModal={setShowModal}
               />
-              {isReplyingTo === reply.id && (
+              {isReplyingTo === reply.id && replyPayload && (
                 <ReplyForm
                   id={replyPayload.id}
                   parentPostId={replyPayload.parentPostId}
