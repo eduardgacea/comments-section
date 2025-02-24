@@ -2,6 +2,7 @@ import { TDeletePostPayload, TEditPostPayload } from "../types/postContext";
 import { PostContext } from "../context/PostContextProvider";
 import { TComment, TReply, EPostType } from "../types/post";
 import { currentUser } from "../data/data.json";
+import { formatDistanceToNow } from "date-fns";
 import { TReplyFormProps } from "./ReplyForm";
 import { useContext, useState } from "react";
 
@@ -21,6 +22,14 @@ export default function Reply({ reply, comment, setDeletePostPayload, setReplyPa
   const [editBoxContent, setEditBoxContent] = useState(reply.content);
 
   const isEditing = editedPostId === reply.id;
+  let createdAt: string;
+
+  const postDate = new Date(reply.createdAt).valueOf();
+  if (isNaN(postDate)) {
+    createdAt = reply.createdAt;
+  } else {
+    createdAt = `${formatDistanceToNow(postDate)} ago`;
+  }
 
   const handleDeleteReply = (id: number, parentPostId: number) => {
     setShowModal(true);
@@ -65,7 +74,7 @@ export default function Reply({ reply, comment, setDeletePostPayload, setReplyPa
         <div className={styles.postDetails}>
           <img src={reply.user.image.png} />
           <div className={styles.username}>{reply.user.username}</div>
-          <div className={styles.createdAt}>{reply.createdAt}</div>
+          <div className={styles.createdAt}>{createdAt}</div>
         </div>
         <button onClick={() => handleStartReplyingTo(reply.id, comment.id, reply.user.username)}>Reply</button>
       </div>
