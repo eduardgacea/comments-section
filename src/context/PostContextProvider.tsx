@@ -15,8 +15,8 @@ const initialState: TPostContextState = {
   likedCommentsIds: [],
   dislikedCommentsIds: [],
   isReplyingTo: undefined,
-  editedPostId: undefined,
-  postComment: () => {},
+  isEditingTo: undefined,
+  newPost: () => {},
   ratePost: () => {},
   deletePost: () => {},
   startReplyingTo: () => {},
@@ -34,7 +34,7 @@ function reducer(prevState: TPostContextState, action: TPostContextAction): TPos
     case "loadComments":
       return { ...prevState, comments: [...initialComments] };
 
-    case "postComment": {
+    case "newPost": {
       const newComment: TComment = {
         id: Date.now(),
         content: action.payload,
@@ -179,10 +179,10 @@ function reducer(prevState: TPostContextState, action: TPostContextAction): TPos
     }
 
     case "startEditingPost":
-      return { ...prevState, editedPostId: action.payload };
+      return { ...prevState, isEditingTo: action.payload };
 
     case "endEditingPost":
-      return { ...prevState, editedPostId: undefined };
+      return { ...prevState, isEditingTo: undefined };
 
     case "editPost": {
       const { id, postType, newContent } = action.payload;
@@ -193,7 +193,7 @@ function reducer(prevState: TPostContextState, action: TPostContextAction): TPos
           comments: prevState.comments.map((comment) =>
             comment.id === id ? { ...comment, content: newContent } : comment
           ),
-          editedPostId: undefined,
+          isEditingTo: undefined,
         };
       } else if (postType === EPostType.REPLY) {
         const { parentPostId } = action.payload;
@@ -209,7 +209,7 @@ function reducer(prevState: TPostContextState, action: TPostContextAction): TPos
                 }
               : comment
           ),
-          editedPostId: undefined,
+          isEditingTo: undefined,
         };
       }
 
@@ -222,7 +222,7 @@ function reducer(prevState: TPostContextState, action: TPostContextAction): TPos
 }
 
 function PostContextProvider({ children }: { children: React.ReactNode }) {
-  const [{ comments, likedCommentsIds, dislikedCommentsIds, isReplyingTo, editedPostId }, dispatch] = useReducer(
+  const [{ comments, likedCommentsIds, dislikedCommentsIds, isReplyingTo, isEditingTo }, dispatch] = useReducer(
     reducer,
     initialState
   );
@@ -232,7 +232,7 @@ function PostContextProvider({ children }: { children: React.ReactNode }) {
     loadComments();
   }, [loadComments]);
 
-  const postComment = (content: string) => dispatch({ type: "postComment", payload: content });
+  const newPost = (content: string) => dispatch({ type: "newPost", payload: content });
   const ratePost = (payload: TRatePostPayload) => dispatch({ type: "ratePost", payload });
   const deletePost = (payload: TDeletePostPayload) => dispatch({ type: "deletePost", payload });
   const startReplyingTo = (id: number) => dispatch({ type: "startReplyingTo", payload: id });
@@ -249,8 +249,8 @@ function PostContextProvider({ children }: { children: React.ReactNode }) {
         likedCommentsIds,
         dislikedCommentsIds,
         isReplyingTo,
-        editedPostId,
-        postComment,
+        isEditingTo,
+        newPost,
         ratePost,
         deletePost,
         startReplyingTo,

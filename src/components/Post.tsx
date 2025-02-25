@@ -4,13 +4,12 @@ import { TReplyFormProps } from "./ReplyForm";
 import { useState, useContext } from "react";
 import { TComment } from "../types/post";
 
-import styles from "./Post.module.css";
-
 import ReplyForm from "./ReplyForm";
-import Comment from "./Comment";
+import Message from "./Message";
 import Modal from "./Modal";
-import Reply from "./Reply";
 import React from "react";
+
+import styles from "./Post.module.css";
 
 type TPostProps = { comment: TComment };
 
@@ -24,8 +23,8 @@ export default function Post({ comment }: TPostProps) {
   return (
     <>
       {showModal && <Modal deletePostPayload={deletePostPayload} setShowModal={setShowModal} />}
-      <Comment
-        comment={comment}
+      <Message
+        message={comment}
         setDeletePostPayload={setDeletePostPayload}
         setReplyPayload={setReplyPayload}
         setShowModal={setShowModal}
@@ -37,9 +36,9 @@ export default function Post({ comment }: TPostProps) {
         <div className={styles.replies}>
           {comment.replies.map((reply) => (
             <React.Fragment key={reply.id}>
-              <Reply
-                reply={reply}
-                comment={comment}
+              <Message
+                message={reply}
+                parentMessage={comment}
                 setDeletePostPayload={setDeletePostPayload}
                 setReplyPayload={setReplyPayload}
                 setShowModal={setShowModal}

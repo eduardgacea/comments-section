@@ -19,8 +19,8 @@ export type TPostContextState = {
   likedCommentsIds: number[];
   dislikedCommentsIds: number[];
   isReplyingTo: number | undefined;
-  editedPostId: number | undefined;
-  postComment: (content: string) => void;
+  isEditingTo: number | undefined;
+  newPost: (content: string) => void;
   ratePost: (payload: TRatePostPayload) => void;
   deletePost: (payload: TDeletePostPayload) => void;
   startReplyingTo: (id: number) => void;
@@ -33,7 +33,7 @@ export type TPostContextState = {
 
 export type TPostContextAction =
   | { type: "loadComments" }
-  | { type: "postComment"; payload: string }
+  | { type: "newPost"; payload: string }
   | { type: "deletePost"; payload: TDeletePostPayload }
   | { type: "ratePost"; payload: TRatePostPayload }
   | { type: "startReplyingTo"; payload: number }

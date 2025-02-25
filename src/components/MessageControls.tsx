@@ -5,7 +5,9 @@ import { TReplyFormProps } from "./ReplyForm";
 import { EPostType } from "../types/post";
 import { useContext } from "react";
 
-type TUserControlsProps = {
+import styles from "./MessageControls.module.css";
+
+type TMessageControlsProps = {
   id: number;
   parentPostId?: number;
   username: string;
@@ -14,14 +16,14 @@ type TUserControlsProps = {
   setReplyPayload: React.Dispatch<React.SetStateAction<TReplyFormProps | undefined>>;
 };
 
-export default function UserControls({
+export default function MessageControls({
   id,
   parentPostId,
   username,
   setShowModal,
   setDeletePostPayload,
   setReplyPayload,
-}: TUserControlsProps) {
+}: TMessageControlsProps) {
   const { startEditingPost, startReplyingTo } = useContext(PostContext);
 
   const isCurrentUser = username === currentUser.username;
@@ -49,15 +51,24 @@ export default function UserControls({
   };
 
   return (
-    <div>
+    <div className={styles.controls}>
       {isCurrentUser ? (
         <>
-          <button onClick={() => handleDeletePost(id)}>DELETE</button>
-          <button onClick={handleStartEditing}>EDIT</button>
+          <button className={`${styles.control} ${styles.delete}`} onClick={() => handleDeletePost(id)}>
+            <img src="images/icon-delete.svg" />
+            <span>Delete</span>
+          </button>
+          <button className={`${styles.control} ${styles.edit}`} onClick={handleStartEditing}>
+            <img src="images/icon-edit.svg" />
+            <span>Edit</span>
+          </button>
         </>
       ) : (
         <>
-          <button onClick={handleStartReplyingTo}>Reply</button>
+          <button className={`${styles.control} ${styles.edit}`} onClick={handleStartReplyingTo}>
+            <img src="images/icon-reply.svg" />
+            <span>Reply</span>
+          </button>
         </>
       )}
     </div>

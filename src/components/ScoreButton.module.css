@@ -37,7 +37,7 @@
   fill: var(--clr-blue-300);
 }
 
-@media (min-width: 375px) {
+@media (min-width: 376px) {
   .scoreButton {
     flex-direction: column;
     width: 2.5rem;

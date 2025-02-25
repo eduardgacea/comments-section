@@ -4,11 +4,11 @@ import { useContext, useState } from "react";
 export default function NewComment() {
   const [newComment, setNewComment] = useState("");
 
-  const { postComment } = useContext(PostContext);
+  const { newPost } = useContext(PostContext);
 
   const handleSend = () => {
     if (newComment === "") return;
-    postComment(newComment);
+    newPost(newComment);
     setNewComment("");
   };
 

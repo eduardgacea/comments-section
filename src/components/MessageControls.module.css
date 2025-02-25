@@ -1,0 +1,31 @@
+.controls {
+  display: flex;
+  gap: 1rem;
+}
+
+.control {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.control:hover {
+  opacity: 0.65;
+}
+
+.control > span {
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  margin-left: 0.35rem;
+}
+
+.delete > span {
+  color: var(--clr-red-300);
+}
+
+.edit,
+.reply > span {
+  color: var(--clr-blue-300);
+}
