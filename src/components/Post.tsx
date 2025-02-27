@@ -32,28 +32,31 @@ export default function Post({ comment }: TPostProps) {
       {isReplyingTo === comment.id && replyPayload && (
         <ReplyForm id={replyPayload.id} parentPostId={replyPayload.parentPostId} replyingTo={replyPayload.replyingTo} />
       )}
-      <div>
-        <div className={styles.replies}>
-          {comment.replies.map((reply) => (
-            <React.Fragment key={reply.id}>
-              <Message
-                message={reply}
-                parentMessage={comment}
-                setDeletePostPayload={setDeletePostPayload}
-                setReplyPayload={setReplyPayload}
-                setShowModal={setShowModal}
-              />
-              {isReplyingTo === reply.id && replyPayload && (
-                <ReplyForm
-                  id={replyPayload.id}
-                  parentPostId={replyPayload.parentPostId}
-                  replyingTo={replyPayload.replyingTo}
+      {comment.replies.length > 0 && (
+        <div className={styles.repliesList}>
+          <div className={styles.repliesListDecorator}></div>
+          <div className={styles.replies}>
+            {comment.replies.map((reply) => (
+              <React.Fragment key={reply.id}>
+                <Message
+                  message={reply}
+                  parentMessage={comment}
+                  setDeletePostPayload={setDeletePostPayload}
+                  setReplyPayload={setReplyPayload}
+                  setShowModal={setShowModal}
                 />
-              )}
-            </React.Fragment>
-          ))}
+                {isReplyingTo === reply.id && replyPayload && (
+                  <ReplyForm
+                    id={replyPayload.id}
+                    parentPostId={replyPayload.parentPostId}
+                    replyingTo={replyPayload.replyingTo}
+                  />
+                )}
+              </React.Fragment>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

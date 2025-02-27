@@ -1,6 +1,6 @@
+import { useContext, useEffect, useRef, useState } from "react";
 import { PostContext } from "../context/PostContextProvider";
 import { TReplyPayload } from "../types/postContext";
-import { useContext, useState } from "react";
 
 export type TReplyFormProps = {
   id: number;
@@ -9,8 +9,11 @@ export type TReplyFormProps = {
 };
 
 export default function ReplyForm({ id, parentPostId, replyingTo }: TReplyFormProps) {
+  const { isReplyingTo, endReplyingTo, addReply } = useContext(PostContext);
   const [content, setContent] = useState(`@${replyingTo} `);
-  const { endReplyingTo, addReply } = useContext(PostContext);
+  const replyRef = useRef<HTMLTextAreaElement>(null);
+
+  const isReplying = id === isReplyingTo;
 
   const handleAddReply = () => {
     const replyPayload: TReplyPayload = {
@@ -31,11 +34,18 @@ export default function ReplyForm({ id, parentPostId, replyingTo }: TReplyFormPr
     }
   };
 
+  useEffect(() => {
+    if (isReplying && replyRef.current) {
+      replyRef.current.focus();
+      replyRef.current.setSelectionRange(replyingTo.length + 2, replyingTo.length + 2);
+    }
+  }, [isReplying, replyingTo.length]);
+
   if (!id || !parentPostId) return null;
 
   return (
     <div>
-      <textarea value={content} onChange={handleChange} placeholder="your reply here..."></textarea>
+      <textarea value={content} onChange={handleChange} ref={replyRef}></textarea>
       <button onClick={handleAddReply}>Reply</button>
     </div>
   );

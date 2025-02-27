@@ -1,4 +1,4 @@
 export enum DEVICE_BREAKPOINTS {
   MOBILE = 375,
-  DESKTOP = 1440,
+  DESKTOP = 868,
 }

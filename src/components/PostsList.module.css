@@ -1,0 +1,6 @@
+.postsList {
+  max-width: 91.4666%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}

@@ -152,7 +152,7 @@ function reducer(prevState: TPostContextState, action: TPostContextAction): TPos
     }
 
     case "startReplyingTo":
-      return { ...prevState, isReplyingTo: action.payload };
+      return { ...prevState, isReplyingTo: action.payload, isEditingTo: undefined };
 
     case "endReplyingTo":
       return { ...prevState, isReplyingTo: undefined };
@@ -179,7 +179,7 @@ function reducer(prevState: TPostContextState, action: TPostContextAction): TPos
     }
 
     case "startEditingPost":
-      return { ...prevState, isEditingTo: action.payload };
+      return { ...prevState, isEditingTo: action.payload, isReplyingTo: undefined };
 
     case "endEditingPost":
       return { ...prevState, isEditingTo: undefined };

@@ -1,6 +1,6 @@
 .scoreButton {
   display: inline-flex;
-  width: 6.25rem;
+  min-width: 6.25rem;
   height: 2.5rem;
   align-items: center;
   justify-content: center;
@@ -37,10 +37,10 @@
   fill: var(--clr-blue-300);
 }
 
-@media (min-width: 376px) {
+@media (min-width: 869px) {
   .scoreButton {
     flex-direction: column;
-    width: 2.5rem;
+    min-width: 2.5rem;
     height: 6.25rem;
   }
 }

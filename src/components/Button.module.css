@@ -1,0 +1,11 @@
+.btn {
+  background-color: var(--clr-blue-300);
+  color: var(--clr-white-100);
+  border: none;
+  min-width: 6.5rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+  border-radius: 8px;
+  height: 3rem;
+  font-size: 1rem;
+}

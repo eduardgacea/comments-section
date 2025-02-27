@@ -30,12 +30,11 @@ input {
 
 body {
   background-color: var(--clr-white-300);
+  padding: 2rem 0rem;
 }
 
 #root {
-  height: 100dvh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
