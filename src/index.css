@@ -26,6 +26,10 @@ input {
   font-family: var(--fnt-primary);
 }
 
+textarea {
+  resize: none;
+}
+
 body {
   background-color: var(--clr-white-300);
   padding: 2rem 0rem;

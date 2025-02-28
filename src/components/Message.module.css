@@ -75,6 +75,19 @@
   border-radius: 3px;
 }
 
+.editArea {
+  color: var(--clr-black-100);
+  outline: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  overflow-y: scroll;
+}
+
+.editArea:focus {
+  border-color: var(--clr-blue-300);
+}
+
 @media (min-width: 869px) {
   .reply,
   .comment {

@@ -16,8 +16,10 @@ export default function NewReply({ id, parentPostId, replyingTo }: TNewReplyProp
   const [replyContent, setReplyContent] = useState(`@${replyingTo} `);
 
   const handleAddReply = () => {
+    const content = replyContent.replace(`@${replyingTo} `, "");
+    if (content === "") return;
     const replyPayload: TReplyPayload = {
-      content: replyContent.replace(`@${replyingTo} `, ""),
+      content,
       replyingTo,
       parentPostId,
     };

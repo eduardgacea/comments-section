@@ -1,8 +1,8 @@
+import { TDeletePostPayload, TEditPostPayload } from "../types/postContext";
 import { DeviceContext } from "../context/DeviceContextProvider";
 import { useContext, useEffect, useRef, useState } from "react";
 import { PostContext } from "../context/PostContextProvider";
-import { TDeletePostPayload } from "../types/postContext";
-import { TComment, TReply } from "../types/post";
+import { EPostType, TComment, TReply } from "../types/post";
 import { currentUser } from "../data/data.json";
 import { formatDistanceToNow } from "date-fns";
 import { TNewReplyProps } from "./NewReply";
@@ -11,6 +11,7 @@ import MessageControls from "./MessageControls";
 import ScoreButton from "./ScoreButton";
 
 import styles from "./Message.module.css";
+import Button from "./Button";
 
 function isComment(message: TComment | TReply): message is TComment {
   return (message as TComment).replies !== undefined;
@@ -31,9 +32,11 @@ export default function Message({
   setReplyPayload,
   setShowModal,
 }: TMessageProps) {
-  const { isEditingTo } = useContext(PostContext);
+  const { isEditingTo, editPost } = useContext(PostContext);
   const { device } = useContext(DeviceContext);
-  const [editBoxContent, setEditBoxContent] = useState(message.content);
+  const [editBoxContent, setEditBoxContent] = useState(
+    isComment(message) ? message.content : `@${message.replyingTo} ${message.content}`
+  );
   const editRef = useRef<HTMLTextAreaElement>(null);
 
   const isCurrentUser = message.user.username === currentUser.username;
@@ -47,12 +50,54 @@ export default function Message({
     timestamp = `${formatDistanceToNow(postDate)} ago`;
   }
 
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (isComment(message)) {
+      setEditBoxContent(e.target.value);
+    } else {
+      const newValue = e.target.value;
+      if (!newValue.startsWith(`@${message.replyingTo} `)) {
+        setEditBoxContent(`@${message.replyingTo} `);
+      } else {
+        setEditBoxContent(newValue);
+      }
+    }
+  };
+
+  const handleEditPost = () => {
+    let payload: TEditPostPayload;
+    const newContent = editBoxContent.slice(editBoxContent.indexOf(" ") + 1);
+    if (newContent === "") return;
+    if (!parentMessage) {
+      payload = {
+        id: message.id,
+        postType: EPostType.COMMENT,
+        newContent,
+      };
+    } else {
+      payload = {
+        id: message.id,
+        postType: EPostType.REPLY,
+        parentPostId: parentMessage.id,
+        newContent,
+      };
+    }
+    editPost(payload);
+  };
+
   useEffect(() => {
     if (isEditing && editRef.current) {
-      editRef.current.focus();
-      editRef.current.setSelectionRange(editBoxContent.length, editBoxContent.length);
+      const textarea = editRef.current;
+
+      const initialHeight = textarea.scrollHeight;
+      textarea.style.height = `${initialHeight}px`;
+      textarea.style.minHeight = `${initialHeight}px`;
+      textarea.style.maxHeight = `${initialHeight}px`;
+
+      const range = editBoxContent.length + (isComment(message) ? 0 : message.replyingTo.length + 2);
+      textarea.focus();
+      textarea.setSelectionRange(range, range);
     }
-  }, [isEditing, editBoxContent.length]);
+  }, [isEditing]);
 
   if (device === "mobile")
     return (
@@ -66,7 +111,19 @@ export default function Message({
           </div>
         </div>
         {isEditing ? (
-          <textarea value={editBoxContent} onChange={(e) => setEditBoxContent(e.target.value)} ref={editRef}></textarea>
+          <>
+            <textarea
+              className={styles.editArea}
+              value={editBoxContent}
+              onChange={handleChange}
+              ref={editRef}
+            ></textarea>
+            <div>
+              <Button style={{ float: "right" }} onClick={handleEditPost}>
+                UPDATE
+              </Button>
+            </div>
+          </>
         ) : (
           <div className={styles.content}>
             {isComment(message) ? (
@@ -122,11 +179,19 @@ export default function Message({
             />
           </div>
           {isEditing ? (
-            <textarea
-              value={editBoxContent}
-              onChange={(e) => setEditBoxContent(e.target.value)}
-              ref={editRef}
-            ></textarea>
+            <>
+              <textarea
+                className={styles.editArea}
+                value={editBoxContent}
+                onChange={handleChange}
+                ref={editRef}
+              ></textarea>
+              <div>
+                <Button style={{ float: "right" }} onClick={handleEditPost}>
+                  UPDATE
+                </Button>
+              </div>
+            </>
           ) : (
             <div className={styles.content}>
               {isComment(message) ? (
