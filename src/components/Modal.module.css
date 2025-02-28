@@ -4,7 +4,7 @@
   width: 100dvw;
   height: 100dvh;
   z-index: 10;
-  background-color: rgba(0, 0, 0, 0.35);
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 .modal {
@@ -16,4 +16,25 @@
   background-color: var(--clr-white-100);
   padding: 2rem;
   border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 91.4666%;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--clr-black-300);
+}
+
+.body {
+  color: var(--clr-black-100);
+  line-height: 1.5rem;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
 }
