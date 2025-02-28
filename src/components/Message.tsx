@@ -5,7 +5,7 @@ import { TDeletePostPayload } from "../types/postContext";
 import { TComment, TReply } from "../types/post";
 import { currentUser } from "../data/data.json";
 import { formatDistanceToNow } from "date-fns";
-import { TReplyFormProps } from "./ReplyForm";
+import { TNewReplyProps } from "./NewReply";
 
 import MessageControls from "./MessageControls";
 import ScoreButton from "./ScoreButton";
@@ -20,7 +20,7 @@ type TMessageProps = {
   message: TComment | TReply;
   parentMessage?: TComment;
   setDeletePostPayload: React.Dispatch<React.SetStateAction<TDeletePostPayload | undefined>>;
-  setReplyPayload: React.Dispatch<React.SetStateAction<TReplyFormProps | undefined>>;
+  setReplyPayload: React.Dispatch<React.SetStateAction<TNewReplyProps | undefined>>;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 

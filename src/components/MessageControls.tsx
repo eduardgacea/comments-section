@@ -1,7 +1,7 @@
 import { PostContext } from "../context/PostContextProvider";
 import { TDeletePostPayload } from "../types/postContext";
 import { currentUser } from "../data/data.json";
-import { TReplyFormProps } from "./ReplyForm";
+import { TNewReplyProps } from "./NewReply";
 import { EPostType } from "../types/post";
 import { useContext } from "react";
 
@@ -13,7 +13,7 @@ type TMessageControlsProps = {
   username: string;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   setDeletePostPayload: React.Dispatch<React.SetStateAction<TDeletePostPayload | undefined>>;
-  setReplyPayload: React.Dispatch<React.SetStateAction<TReplyFormProps | undefined>>;
+  setReplyPayload: React.Dispatch<React.SetStateAction<TNewReplyProps | undefined>>;
 };
 
 export default function MessageControls({
