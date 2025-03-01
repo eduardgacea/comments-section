@@ -104,7 +104,7 @@ export default function Message({
       <div className={`${parentMessage ? styles.reply : styles.comment}`}>
         <div className={styles.messageHeader}>
           <div className={styles.messageDetails}>
-            <img className={styles.avatar} src={message.user.image.png} />
+            <img className={styles.avatar} src={message.user.image.png} alt={message.user.username} />
             <div className={styles.username}>{message.user.username}</div>
             {isCurrentUser && <div className={styles.meTag}>you</div>}
             <div className={styles.timestamp}>{timestamp}</div>
@@ -164,7 +164,7 @@ export default function Message({
         <div className={styles.messageContent}>
           <div className={styles.messageHeader}>
             <div className={styles.messageDetails}>
-              <img className={styles.avatar} src={message.user.image.png} />
+              <img className={styles.avatar} src={message.user.image.png} alt={message.user.username} />
               <div className={styles.username}>{message.user.username}</div>
               {isCurrentUser && <div className={styles.meTag}>you</div>}
               <div className={styles.timestamp}>{timestamp}</div>

@@ -55,18 +55,18 @@ export default function MessageControls({
       {isCurrentUser ? (
         <>
           <button className={`${styles.control} ${styles.delete}`} onClick={() => handleDeletePost(id)}>
-            <img src="images/icon-delete.svg" />
+            <img src="images/icon-delete.svg" alt="delete" />
             <span>Delete</span>
           </button>
           <button className={`${styles.control} ${styles.edit}`} onClick={handleStartEditing}>
-            <img src="images/icon-edit.svg" />
+            <img src="images/icon-edit.svg" alt="edit" />
             <span>Edit</span>
           </button>
         </>
       ) : (
         <>
           <button className={`${styles.control} ${styles.edit}`} onClick={handleStartReplyingTo}>
-            <img src="images/icon-reply.svg" />
+            <img src="images/icon-reply.svg" alt="reply" />
             <span>Reply</span>
           </button>
         </>

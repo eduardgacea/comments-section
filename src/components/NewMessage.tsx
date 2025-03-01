@@ -56,7 +56,7 @@ export default function NewMessage({
     <div className={`${styles.newMessage} ${replyingToType === EPostType.REPLY && styles.newReply}`}>
       <textarea value={newMessage} onChange={handleChange} placeholder={placeholder} ref={ref}></textarea>
       <div className={styles.userActions}>
-        <img className={styles.avatar} src={currentUser.image.png} />
+        <img className={styles.avatar} src={currentUser.image.png} alt={currentUser.username} />
         <Button onClick={clickHandler}>{confirmMessage}</Button>
       </div>
     </div>
