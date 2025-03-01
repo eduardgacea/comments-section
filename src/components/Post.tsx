@@ -32,11 +32,12 @@ export default function Post({ comment }: TPostProps) {
       {isReplyingTo === comment.id && replyPayload && (
         <NewReply id={replyPayload.id} parentPostId={replyPayload.parentPostId} replyingTo={replyPayload.replyingTo} />
       )}
-      <div className={styles.repliesList}>
-        <div className={styles.repliesListDecorator}></div>
-        <div className={styles.replies}>
-          {comment.replies.length > 0 &&
-            comment.replies.map((reply) => (
+
+      {comment.replies.length > 0 && (
+        <div className={styles.repliesList}>
+          <div className={styles.repliesListDecorator}></div>
+          <div className={styles.replies}>
+            {comment.replies.map((reply) => (
               <React.Fragment key={reply.id}>
                 <Message
                   message={reply}
@@ -54,8 +55,9 @@ export default function Post({ comment }: TPostProps) {
                 )}
               </React.Fragment>
             ))}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

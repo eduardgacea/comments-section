@@ -9,9 +9,9 @@ import { TNewReplyProps } from "./NewReply";
 
 import MessageControls from "./MessageControls";
 import ScoreButton from "./ScoreButton";
+import Button from "./Button";
 
 import styles from "./Message.module.css";
-import Button from "./Button";
 
 function isComment(message: TComment | TReply): message is TComment {
   return (message as TComment).replies !== undefined;
