@@ -155,19 +155,19 @@ export default function Message({
 
   if (device === "desktop")
     return (
-      <div className={`${parentMessage ? styles.reply : styles.comment}`}>
+      <div className={`${parentMessage ? styles.reply : styles.comment} ${styles.desktopMessage}`}>
         <ScoreButton
           id={message.id}
           parentPostId={parentMessage ? parentMessage.id : undefined}
           score={message.score}
         />
-        <div>
+        <div className={styles.messageContent}>
           <div className={styles.messageHeader}>
             <div className={styles.messageDetails}>
               <img className={styles.avatar} src={message.user.image.png} />
               <div className={styles.username}>{message.user.username}</div>
-              {isCurrentUser && <div>you</div>}
-              <div className={styles.createdAt}>{timestamp}</div>
+              {isCurrentUser && <div className={styles.meTag}>you</div>}
+              <div className={styles.timestamp}>{timestamp}</div>
             </div>
             <MessageControls
               id={message.id}
